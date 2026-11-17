@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 DompetKu - Pencatat Keuangan Harian</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800 min-h-screen py-8 px-4">
+
+    <div class="max-w-5xl mx-auto">
+
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-indigo-600">
+                💰 DompetKu
+            </h1>
+            <p class="text-gray-500">
+                Pencatat Keuangan Harian Sederhana
+            </p>
+        </header>
+
+        <!-- Dashboard -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+
+            <div class="bg-white p-5 rounded-xl shadow">
+                <p class="text-gray-500 text-sm">Sisa Saldo</p>
+                <h2 id="total-saldo" class="text-3xl font-bold">
+                    Rp0
+                </h2>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow">
+                <p class="text-green-500 text-sm">
+                    Total Pemasukan
+                </p>
+                <h2 id="total-pemasukan"
+                    class="text-3xl font-bold text-green-600">
+                    Rp0
+                </h2>
+            </div>
+
+            <div class="bg-white p-5 rounded-xl shadow">
+                <p class="text-red-500 text-sm">
+                    Total Pengeluaran
+                </p>
+                <h2 id="total-pengeluaran"
+                    class="text-3xl font-bold text-red-600">
+                    Rp0
+                </h2>
+            </div>
+
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+
+            <!-- Form -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow">
+
+                <h2 class="text-xl font-semibold mb-4">
+                    Tambah Transaksi
+                </h2>
+
+                <form id="form-transaksi" class="space-y-4">
+
+                    <div>
+                        <label class="block mb-2">
+                            Jenis Transaksi
+                        </label>
+
+                        <div class="grid grid-cols-2 gap-2">
+
+                            <label>
+                                <input type="radio"
+                                       name="tipe"
+                                       value="pemasukan"
+                                       checked
+                                       class="sr-only peer">
+
+                                <div class="border rounded-lg p-2 text-center cursor-pointer
+                                    peer-checked:bg-green-100">
+                                    ➕ Pemasukan
+                                </div>
+                            </label>
+
+                            <label>
+                                <input type="radio"
+                                       name="tipe"
+                                       value="pengeluaran"
+                                       class="sr-only peer">
+
+                                <div class="border rounded-lg p-2 text-center cursor-pointer
+                                    peer-checked:bg-red-100">
+                                    ➖ Pengeluaran
+                                </div>
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block mb-2">
+                            Kategori
+                        </label>
+
+                        <select id="kategori"
+                                class="w-full border rounded-lg p-3">
+
+                            <option value="Gaji / Bonus">
+                                💼 Gaji / Bonus
+                            </option>
+
+                            <option value="Makanan & Minuman">
+                                🍔 Makanan & Minuman
+                            </option>
+
+                            <option value="Transportasi">
+                                🚗 Transportasi
+                            </option>
+
+                            <option value="Belanja">
+                                🛍️ Belanja
+                            </option>
+
+                            <option value="Tagihan & Utilitas">
+                                ⚡ Tagihan & Utilitas
+                            </option>
+
+                            <option value="Hiburan">
+                                🎬 Hiburan
+                            </option>
+
+                            <option value="Lainnya">
+                                📌 Lainnya
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block mb-2">
+                            Nominal
+                        </label>
+
+                        <input
+                            type="number"
+                            id="jumlah"
+                            required
+                            min="1"
+                            placeholder="Contoh: 50000"
+                            class="w-full border rounded-lg p-3">
+                    </div>
+
+                    <div>
+                        <label class="block mb-2">
+                            Keterangan
+                        </label>
+
+                        <input
+                            type="text"
+                            id="keterangan"
+                            required
+                            placeholder="Contoh: Makan Siang"
+                            class="w-full border rounded-lg p-3">
+                    </div>
+
+                    <div>
+                        <label class="block mb-2">
+                            Tanggal
+                        </label>
+
+                        <input
+                            type="date"
+                            id="tanggal"
+                            required
+                            class="w-full border rounded-lg p-3">
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-lg">
+                        Simpan Transaksi
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- Riwayat -->
+            <div class="lg:col-span-3 bg-white p-6 rounded-xl shadow">
+
+                <div class="flex justify-between flex-wrap gap-2 mb-4">
+
+                    <h2 class="text-xl font-semibold">
+                        Riwayat Transaksi
+                    </h2>
+
+                    <div class="flex gap-2">
+
+                        <button
+                            id="filter-semua"
+                            type="button"
+                            onclick="setFilter('semua')"
+                            class="filter-btn active">
+                            Semua
+                        </button>
+
+                        <button
+                            id="filter-pemasukan"
+                            type="button"
+                            onclick="setFilter('pemasukan')"
+                            class="filter-btn">
+                            Masuk
+                        </button>
+
+                        <button
+                            id="filter-pengeluaran"
+                            type="button"
+                            onclick="setFilter('pengeluaran')"
+                            class="filter-btn">
+                            Keluar
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div id="daftar-transaksi"
+                     class="space-y-3 max-h-[500px] overflow-y-auto">
+                </div>
+
+                <div class="border-t mt-4 pt-4 text-right">
+
+                    <button
+                        type="button"
+                        onclick="hapusSemuaData()"
+                        class="text-red-500 hover:text-red-700">
+                        Reset Semua Data
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
