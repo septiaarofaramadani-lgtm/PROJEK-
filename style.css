@@ -1,0 +1,46 @@
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:#f3f4f6;
+}
+
+/* Animasi transaksi */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.transaksi-item{
+    animation:fadeIn .3s ease;
+}
+
+.filter-btn{
+    padding:6px 12px;
+    border-radius:8px;
+    background:#e5e7eb;
+    color:#4b5563;
+}
+
+.filter-btn.active{
+    background:#4f46e5;
+    color:white;
+}
+
+::-webkit-scrollbar{
+    width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#94a3b8;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#e5e7eb;
+}
+  
